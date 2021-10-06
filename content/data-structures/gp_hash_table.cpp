@@ -19,3 +19,5 @@ using hash_map = __gnu_pbds::gp_hash_table<K, V, splitmix64_hash>;
 
 template <typename K>
 using hash_set = hash_map<K, __gnu_pbds::null_type>;
+
+// hash_map<int, int> table({}, {}, {}, {}, {1 << 16});
