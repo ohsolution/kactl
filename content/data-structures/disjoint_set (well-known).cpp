@@ -1,6 +1,7 @@
 // editor war
 struct disjoint_set {
     vector<int> par, enemy;
+    
     disjoint_set(int n) : par(n, -1), enemy(n, -1) {}
     int find(int u) {
         return par[u] < 0 ? u : par[u] = find(par[u]);
@@ -8,10 +9,8 @@ struct disjoint_set {
     int merge(int u, int v) {
         if (u == -1) return v;
         if (v == -1) return u;
-
         u = find(u), v = find(v);
         if (u == v) return u;
-
         if (par[u] > par[v]) swap(u, v);
         par[u] += par[v];
         par[v] = u;
@@ -20,7 +19,6 @@ struct disjoint_set {
     bool ack(int u, int v) {
         u = find(u), v = find(v);
         if (enemy[u] == v) return false;
-
         int a = merge(u, v), b = merge(enemy[u], enemy[v]);
         enemy[a] = b;
         if (~b) enemy[b] = a;
@@ -29,7 +27,6 @@ struct disjoint_set {
     bool dis(int u, int v) {
         u = find(u), v = find(v);
         if (u == v) return false;
-
         int a = merge(u, enemy[v]), b = merge(v, enemy[u]);
         enemy[a] = b, enemy[b] = a;
         return true;
@@ -49,7 +46,6 @@ struct disjoint_set {
     bool merge(int u, int v) {
         u = find(u), v = find(v);
         if (u == v) return false;
-
         if (par[u] > par[v]) swap(u, v);
         stk.emplace_back(v, par[v]);
         par[u] += par[v];
@@ -67,10 +63,8 @@ struct disjoint_set {
 // minimize maximum weight in path
 template <typename T, typename F = less<T>>
 class disjoint_set {
-    // change this (1/1)
-    const T e = 0x3f3f3f3f;
+    const T e = 0x3f3f3f3f; // change this
     const F cmp {};
-    // change this (1/1)
     const int n;
     vector<int> par;
     vector<T> weight;
