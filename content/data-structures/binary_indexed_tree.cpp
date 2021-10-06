@@ -1,8 +1,3 @@
-/**
- * @author  palilo
- * @brief   binary indexed tree (a.k.a. fenwick tree)
- * @example http://boj.kr/2761f0417b9e4126bfd4a02962fbe6dd
- */
 template <typename T>
 class binary_indexed_tree {
     const size_t n;
