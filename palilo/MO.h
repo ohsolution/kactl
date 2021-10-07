@@ -1,27 +1,26 @@
 /**
- * Description: dfs에서 노드에 들어가고 나갈 때마다 in-time, out-time을 기록했다면 $(u, v), {in_u \leq \in_v}$ 사이의 경로는...
- * $u = lca$일 경우, $[in_u, in_v]$.
- * $u \neq lca$일 경우, &[out_u, in_v] + in_{lca}$
- * Usage: array일 경우 add(), del()로 원소의 추가/삭제를 하면 돤다.
- * tree일 경우 add(), del()은 쓰면 안된다. 어떤 원소를 추가/삭제 하고 싶으면 flip()을 쓰면 된다.
+ * Description: recorde each in_time and out_time in dfs. the path of $(u, v), {in_u \leq \in_v}$ is ...
+ * if $u = lca$, $[in_u, in_v]$.
+ * if $u \neq lca$, &[out_u, in_v] + in_{lca}$
+ * Usage:
+ * if array: just use add(), del().
+ * if tree: DO NOT USE add(), del(). only use flip() for both
  * Time: O(N \sqrt Q)
  */
-
 struct query_t {
-    int l, r, id;
-    int lca;
-    // ^ if tree
+    int l, r, id, lca;
 };
 
 void add(int id) {}
 void del(int id) {}
 int calc() {}
 
-// 여기서부터는 tree인 경우에만
+// < if tree >
 vector<int> adj[MX_N];
 int sz[MX_N], in[MX_N], out[MX_N], par[MX_N], top[MX_N], tour[MX_N << 1];
 int tick;
 bitset<MX_N> visited {};
+// </if tree >
 
 void dfs(int u) {
     sz[u] = 1;
@@ -64,6 +63,8 @@ void flip(int id) {
 }
 
 int main() {
+    // example of Mo's on tree
+    // how to initialize queries
     vector<query_t> q(m);
     for (int i = 0, u, v; i < m; ++i) {
         cin >> u >> v, --u, --v;
@@ -72,20 +73,22 @@ int main() {
         u == lca ? (q[i].l = in[u], q[i].lca = -1) : (q[i].l = out[u], q[i].lca = lca);
         q[i].r = in[v] + 1, q[i].id = i;
     }
+    // how to sort...
     constexpr int sq = 350;
     sort(q.begin(), q.end(), [&](auto& a, auto& b) {
         if (a.l / sq != b.l / sq) return a.l < b.l;
         return a.l / sq & 1 ? a.r > b.r : a.r < b.r;
     });
+    // how to calculate answer...
     vector<int> ans(m);
     int pl = q[0].l, pr = q[0].l;
     for (const auto [l, r, id, lca] : q) {
-        while (l < pl) flip(tour[--pl]); // 무조건 이거 먼저
-        while (pr < r) flip(tour[pr++]); // 무조건 이거 먼저
-        while (pl < l) flip(tour[pl++]); // 무조건 이거 나중에
-        while (r < pr) flip(tour[--pr]); // 무조건 이거 나중에
+        while (l < pl) flip(tour[--pl]);
+        while (pr < r) flip(tour[pr++]);
+        while (pl < l) flip(tour[pl++]);
+        while (r < pr) flip(tour[--pr]);
         if (~lca) flip(lca);
-        ans[id] = res;
+        ans[id] = calc();
         if (~lca) flip(lca);
     }
 }
