@@ -1,41 +1,40 @@
 /**
- * Author: Lukas Polacek
- * Date: 2009-10-28
+ * Author: Cube219
+ * Date: 2021-10-08
  * License: CC0
- * Source: Czech graph algorithms book, by Demel. (Tarjan's algorithm)
  * Description: Finds strongly connected components in a
  * directed graph. If vertices $u, v$ belong to the same component,
  * we can reach $u$ from $v$ and vice versa.
- * Usage: scc(graph, [\&](vi\& v) { ... }) visits all components
- * in reverse topological order. comp[i] holds the component
- * index of a node (a component only has edges to components with
- * lower index). ncomps will contain the number of components.
+ * Usage: scc(g, n);
+ * sccIdx[node] or sccs({0, 1, 3}, {2, 4}, ...)
  * Time: O(E + V)
- * Status: Bruteforce-tested for N <= 5
  */
 #pragma once
 
-vi val, comp, z, cont;
-int Time, ncomps;
-template<class G, class F> int dfs(int j, G& g, F& f) {
-	int low = val[j] = ++Time, x; z.push_back(j);
-	for (auto e : g[j]) if (comp[e] < 0)
-		low = min(low, val[e] ?: dfs(e,g,f));
-
-	if (low == val[j]) {
-		do {
-			x = z.back(); z.pop_back();
-			comp[x] = ncomps;
-			cont.push_back(x);
-		} while (x != j);
-		f(cont); cont.clear();
-		ncomps++;
-	}
-	return val[j] = low;
+vector<vi> sccs;
+vi d, st, sccIdx;
+int dNum;
+int dfs(vector<vi>& g, int cur) {
+    d[cur] = dNum++;
+    st.push_back(cur);
+    int ret = d[cur];
+    for(int nxt : g[cur]) {
+        if(sccIdx[nxt] < 0) ret = min(ret, d[nxt] ? : dfs(g, nxt));
+    }
+    if(ret == d[cur]) {
+        int top;
+        sccs.push_back({});
+        auto& scc = sccs.back();
+        do {
+            top = st.back(); st.pop_back();
+            scc.push_back(top);
+            sccIdx[top] = sccs.size();
+        } while(top != cur);
+    }
+    return ret;
 }
-template<class G, class F> void scc(G& g, F f) {
-	int n = sz(g);
-	val.assign(n, 0); comp.assign(n, -1);
-	Time = ncomps = 0;
-	rep(i,0,n) if (comp[i] < 0) dfs(i, g, f);
+void scc(vector<vi>& g, int n)
+{
+    d.assign(n, 0); sccIdx.assign(n, -1); dNum = 1;
+    rep(i,0,n) if (sccIdx[i] < 0) dfs(g, i);
 }

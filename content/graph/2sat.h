@@ -73,3 +73,8 @@ struct TwoSat {
 		return 1;
 	}
 };
+
+// a^b == (~a || ~b) & (a||b)
+// a eq b == (~a||b) &(a||~b)
+// a-> b == (~a||b)
+// (a+b+c<=1) == (~a||~b) & (~a||~c) &(~b||~c)

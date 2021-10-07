@@ -1,3 +1,11 @@
+/**
+ * Author: ohsolution
+ * Date: 2021-10-08
+ * Description:
+ * Usage:
+ * Time: O(E + V)
+ */
+#pragma once
 
 int dfn[max_v], low[max_v], cn, ccn;
 vector<int> adj[max_v];
