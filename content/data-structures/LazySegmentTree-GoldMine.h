@@ -1,11 +1,18 @@
 /**
+ * Author: palilo
+ * Date: 2021-10-07
+ * License: CC0
  * Description: Lazy Segment Tree - Gold Mine
+ * Time: O(\log N).
  * Usage:
  * `e` : identity element
  * `op`: unite two nodes
  */
+
+#pragma once
+
 struct node_t {
-    int64_t lmax, cmax, rmax, sum;
+    ll lmax, cmax, rmax, sum;
 };
 
 template <typename node_t>
@@ -37,7 +44,7 @@ public:
         }
         return op(lval, rval);
     }
-    int64_t all_prod() const {
+    ll all_prod() const {
         return tree[1].cmax;
     }
     void clear() {

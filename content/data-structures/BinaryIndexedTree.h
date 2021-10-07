@@ -1,3 +1,15 @@
+/**
+ * Author: palilo
+ * Date: 2021-10-07
+ * License: CC0
+ * Description: Computes partial sums a[0] + a[1] + ... + a[pos - 1], and updates single elements a[i],
+ * taking the difference between the old and new value.
+ * Time: Both operations are $O(\log N)$.
+ * Usage:
+ *  TODO
+ */
+#pragma once
+
 template <typename T>
 class binary_indexed_tree {
     const size_t n;
