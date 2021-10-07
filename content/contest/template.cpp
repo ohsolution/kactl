@@ -8,7 +8,20 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-int main() {
-	cin.tie(0)->sync_with_stdio(0);
-	cin.exceptions(cin.failbit);
-}
+#ifdef OHSOLUTION
+#define ce(t) cerr<<t
+#define AT cerr << "\n=================ANS=================\n"
+#define AE cerr << "\n=====================================\n"
+#define DB(a) cerr << __LINE__ << ": " << #a << " = " << (a) << endl;
+#define __builtin_popcount __popcnt
+#define __builtin_popcountll __popcnt64
+const LL LNF = 0x3f3f3f3f3f3f3f3f;
+const int INF = 0x3f3f3f3f;
+template<typename T, typename U> void ckmax(T& a, U b) { a = a < b ? b : a; }
+template<typename T, typename U> void ckmin(T& a, U b) { a = a > b ? b : a; }
+template<typename T, typename U> void MOD(T& a, U b) { a += b; if (a >= mod) a -= mod; };
+#else
+#define AT
+#define AE
+#define ce(t)
+#endif
