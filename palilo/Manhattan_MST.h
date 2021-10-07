@@ -1,7 +1,7 @@
 /**
- * Description: point 중 Manhattan_MST에 포함될 '후보 point' return (<= 4n)
- * Usage: T(distace_t), U(point_t);
- * return값에 Kruskal 쓰면 진짜 Manhattan_MST가 나온다.
+ * Description: return candidate edges(w, u, v) of Manhattan_MST (<= 4n)
+ * Usage: T(distace_t), U(point_t)
+ * run Kruskal's to get the 'true' Manhattan_MST
  */
 template <typename T, typename U>
 vector<tuple<T, int, int>> manhattan_MST(const vector<U>& a) {
