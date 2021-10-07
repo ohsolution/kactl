@@ -8,6 +8,9 @@ vector<edge> ve;
 vector<int> adj[max_v];
 int idx[max_v], dist[max_v],inq[max_v],vist[max_v],S,T;
 
+// addedge (u,v,capicity,cost)
+// then run 
+
 auto addedge = [&](int a, int b, int cap, int cost)
 {
 	edge e1 = { a,b,cap,0,cost };
