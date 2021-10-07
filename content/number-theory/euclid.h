@@ -13,3 +13,4 @@ ll euclid(ll a, ll b, ll &x, ll &y) {
 	ll d = euclid(b, a % b, y, x);
 	return y -= a/b * x, d;
 }
+// x2 = x + k * b/gcd(a,b) y2 = y - k * a/gcd(a,b)
