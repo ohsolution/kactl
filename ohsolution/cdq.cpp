@@ -58,18 +58,18 @@ int main()
 
         if (tp == 3) break;
 
-        if (tp & 1) // 점 업데이트 쿼리
+        if (tp & 1) // update point
         {
             int x, y, val; ci(x >> y >> val);
             vi.push_back({ ct,x,y,val,0,0 });
         }
-        else // 직사각형 내부 점 개수 세는 쿼리
+        else // count inner point in ractangle
         {
             int lx, ly, rx, ry; ci(lx >> ly >> rx >> ry);
             vi.push_back({ ct,lx - 1,ly - 1,0,(LL)ans.size(),1 });
             vi.push_back({ ct,rx,ry ,0,(LL)ans.size(),1 });
             vi.push_back({ ct,lx - 1,ry,0,(LL)ans.size(),-1 });
-            vi.push_back({ ct,rx,ly - 1,0,(LL)ans.size(),-1 }); // 번호,(x,y) 좌표, 점추가 개수, 쿼리결과 저장할 idx,sign
+            vi.push_back({ ct,rx,ly - 1,0,(LL)ans.size(),-1 }); // idx,(x,y) cod, number of add point, ans save idx,sign
             ans.push_back(0);
         }
         ++ct;
@@ -78,5 +78,5 @@ int main()
     cdq(0, vi.size());    
     fa(i, 1, ans.size()) co(ans[i] << "\n");
 
-	return 0;
+    return 0;
 }
