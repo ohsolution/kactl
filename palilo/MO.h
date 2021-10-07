@@ -1,10 +1,10 @@
 /**
- * Description: recorde each in_time and out_time in dfs. the path of $(u, v), {in_u \leq \in_v}$ is ...
+ * Description: record in_time and out_time in dfs. the path of $(u, v), {in_u \leq \in_v}$ is ...
  * if $u = lca$, $[in_u, in_v]$.
  * if $u \neq lca$, &[out_u, in_v] + in_{lca}$
  * Usage:
  * if array: just use add(), del().
- * if tree: DO NOT USE add(), del(). only use flip() for both
+ * if tree: NEVER USE add(), del(). only use flip() for both
  * Time: O(N \sqrt Q)
  */
 struct query_t {
@@ -67,7 +67,7 @@ int main() {
     // how to initialize queries
     vector<query_t> q(m);
     for (int i = 0, u, v; i < m; ++i) {
-        cin >> u >> v, --u, --v;
+        cin >> u >> v;
         if (in[u] > in[v]) swap(u, v);
         auto lca = get_lca(u, v);
         u == lca ? (q[i].l = in[u], q[i].lca = -1) : (q[i].l = out[u], q[i].lca = lca);
