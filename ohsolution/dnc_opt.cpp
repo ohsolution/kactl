@@ -22,28 +22,28 @@ function<void(int, int, int, int, int)> dnc = [&](int lev, int l, int r, int s, 
 };
 
 function<void(int, int, int, int)> dnc = [&](int l, int r, int s, int e)
+{
+	if (l > r ||s > e) return;
+
+	int mid = l + r >> 1;
+	int opt = -1;
+	LL maxi = -LNF;
+
+	fa(i, s, e+1)
 	{
-		if (l > r ||s > e) return;
+		LL dx = b[i].first - a[mid].first;
+		LL dy = b[i].second - a[mid].second;
 
-		int mid = l + r >> 1;
-		int opt = -1;
-		LL maxi = -LNF;
+		LL ret = (dx < 0 && dy < 0) ? 0 : dx * dy;
 
-		fa(i, s, e+1)
+		if (ret > maxi)
 		{
-			LL dx = b[i].first - a[mid].first;
-			LL dy = b[i].second - a[mid].second;
-
-			LL ret = (dx < 0 && dy < 0) ? 0 : dx * dy;
-
-			if (ret > maxi)
-			{
-				maxi = ret;
-				opt = i;
-			}
+			maxi = ret;
+			opt = i;
 		}
+	}
 
-		ckmax(ans, maxi);
+	ckmax(ans, maxi);
 
-		dnc(l, mid - 1, s, opt+1); dnc(mid + 1, r, opt-1, e);
-	};
+	dnc(l, mid - 1, s, opt+1); dnc(mid + 1, r, opt-1, e);
+};
