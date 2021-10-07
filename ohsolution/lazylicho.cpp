@@ -1,6 +1,6 @@
 typedef long long ll;
 const ll inf = 4e18;
-struct LiChao  // 최소 라인 관리 최대 관리를 원하면 ax+b 대신 -ax-b 를 집어넣으면 됨.
+struct LiChao  // Minimum line management If you want maximum management, you can put -ax-b instead of ax+b.
 {
 	struct Node {
 		int l, r; ll a, b, mn, aa, bb;
@@ -12,7 +12,9 @@ struct LiChao  // 최소 라인 관리 최대 관리를 원하면 ax+b 대신 -a
 		seg.resize(2);
 		_l = l; _r = r;
 	}
-	void propagate(int n, ll l, ll r) {
+	
+	void propagate(int n, ll l, ll r) 
+	{
 		if (seg[n].aa || seg[n].bb) {
 			if (l != r) {
 				if (seg[n].l == 0) seg[n].l = seg.size(), seg.push_back(Node());
@@ -25,7 +27,9 @@ struct LiChao  // 최소 라인 관리 최대 관리를 원하면 ax+b 대신 -a
 			seg[n].aa = seg[n].bb = 0;
 		}
 	}
-	void insert(ll L, ll R, ll a, ll b, int n, ll l, ll r) {
+	
+	void insert(ll L, ll R, ll a, ll b, int n, ll l, ll r) 
+	{
 		if (r < L || R < l || L > R) return;
 		if (seg[n].l == 0) seg[n].l = seg.size(), seg.push_back(Node());
 		if (seg[n].r == 0) seg[n].r = seg.size(), seg.push_back(Node());
@@ -46,32 +50,18 @@ struct LiChao  // 최소 라인 관리 최대 관리를 원하면 ax+b 대신 -a
 		}
 		else insert(L, R, a, b, seg[n].r, m + 1, r);
 	}
-	void add(ll L, ll R, ll a, ll b, int n, ll l, ll r) {
-		if (r < L || R < l || L > R) return;
-		if (seg[n].l == 0) seg[n].l = seg.size(), seg.push_back(Node());
-		if (seg[n].r == 0) seg[n].r = seg.size(), seg.push_back(Node());
-		propagate(n, l, r);
-		ll m = l + r >> 1;
-		if (l < L || R < r) {
-			insert(l, m, seg[n].a, seg[n].b, seg[n].l, l, m);
-			insert(m + 1, r, seg[n].a, seg[n].b, seg[n].r, m + 1, r);
-			seg[n].a = 0, seg[n].b = inf, seg[n].mn = inf;
-			if (L <= m) add(L, R, a, b, seg[n].l, l, m);
-			if (m + 1 <= R) add(L, R, a, b, seg[n].r, m + 1, r);
-			seg[n].mn = min(seg[seg[n].l].mn, seg[seg[n].r].mn);
-			return;
-		}
-		seg[n].aa += a, seg[n].bb += b;
-		propagate(n, l, r);
-	}
-	ll get(ll x, int n, ll l, ll r) {
+	
+	ll get(ll x, int n, ll l, ll r) 
+	{
 		if (n == 0) return inf;
 		propagate(n, l, r);
 		ll ret = seg[n].a * x + seg[n].b, m = l + r >> 1;
 		if (x <= m) return min(ret, get(x, seg[n].l, l, m));
 		return min(ret, get(x, seg[n].r, m + 1, r));
 	}
-	ll get(ll L, ll R, int n, ll l, ll r) {
+	
+	ll get(ll L, ll R, int n, ll l, ll r) 
+	{
 		if (n == 0) return inf;
 		if (r < L || R < l || L > R) return inf;
 		propagate(n, l, r);
@@ -79,17 +69,16 @@ struct LiChao  // 최소 라인 관리 최대 관리를 원하면 ax+b 대신 -a
 		ll m = l + r >> 1;
 		return min({ seg[n].a * max(l,L) + seg[n].b, seg[n].a * min(r,R) + seg[n].b, get(L, R, seg[n].l, l, m), get(L, R, seg[n].r, m + 1, r) });
 	}
+	
 	void insert(ll L, ll R, ll a, ll b)  // [l,r] insert ax+b
 	{
 		insert(L, R, a, b, 1, _l, _r);
 	}
-	void add(ll L, ll R, ll a, ll b)  // add [l,r] ax+b
-	{
-		add(L, R, a, b, 1, _l, _r);
-	}
+	
 	ll get(ll x) {
 		return get(x, 1, _l, _r);
 	}
+	
 	ll get(ll L, ll R) {
 		return get(L, R, 1, _l, _r);
 	}
