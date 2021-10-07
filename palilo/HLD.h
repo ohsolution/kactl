@@ -1,6 +1,5 @@
 /**
  * Usage: dfs(0); hld(0);
- * range-update의 경우 query와 똑같은 범위에 적용하면 됨.
  */
 vector<vector<int>> adj(n);
 vector<int> sz(n), in(n), par(n), top(n);
