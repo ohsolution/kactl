@@ -1,9 +1,6 @@
 /**
- * @Description: flow_t을 고를 땐 '유량의 총 합'을 커버할 수 있도록 해야 함.
- * 모르겠으면 그냥 long long 씁시다.
- * @Usage: dfs(), bfs()는 내부적으로 쓰이는 거라 신경 ㄴ
- * add_edge(u, v, c): u -> v로 가는 용량 c짜리 간선 추가
- * max_flow(): src -> sink의 최대 유량 return
+ * @Description: to choose `flow_t`, you must consider the sum of flows.
+ * if unsure, just long long
  */
 using flow_t = int;
 
