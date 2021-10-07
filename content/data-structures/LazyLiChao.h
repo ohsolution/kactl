@@ -1,4 +1,10 @@
-typedef long long ll;
+/**
+ * Author: ohsolution
+ * Date: 2021-10-08
+ * Description:
+ */
+#pragma once
+
 const ll inf = 4e18;
 struct LiChao  // Minimum line management If you want maximum management, you can put -ax-b instead of ax+b.
 {
@@ -13,8 +19,7 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 		_l = l; _r = r;
 	}
 	
-	void propagate(int n, ll l, ll r) 
-	{
+	void propagate(int n, ll l, ll r) {
 		if (seg[n].aa || seg[n].bb) {
 			if (l != r) {
 				if (seg[n].l == 0) seg[n].l = seg.size(), seg.push_back(Node());
@@ -28,8 +33,7 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 		}
 	}
 	
-	void insert(ll L, ll R, ll a, ll b, int n, ll l, ll r) 
-	{
+	void insert(ll L, ll R, ll a, ll b, int n, ll l, ll r) {
 		if (r < L || R < l || L > R) return;
 		if (seg[n].l == 0) seg[n].l = seg.size(), seg.push_back(Node());
 		if (seg[n].r == 0) seg[n].r = seg.size(), seg.push_back(Node());
@@ -51,8 +55,7 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 		else insert(L, R, a, b, seg[n].r, m + 1, r);
 	}
 	
-	ll get(ll x, int n, ll l, ll r) 
-	{
+	ll get(ll x, int n, ll l, ll r) {
 		if (n == 0) return inf;
 		propagate(n, l, r);
 		ll ret = seg[n].a * x + seg[n].b, m = l + r >> 1;
@@ -60,8 +63,7 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 		return min(ret, get(x, seg[n].r, m + 1, r));
 	}
 	
-	ll get(ll L, ll R, int n, ll l, ll r) 
-	{
+	ll get(ll L, ll R, int n, ll l, ll r) {
 		if (n == 0) return inf;
 		if (r < L || R < l || L > R) return inf;
 		propagate(n, l, r);
@@ -69,9 +71,8 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 		ll m = l + r >> 1;
 		return min({ seg[n].a * max(l,L) + seg[n].b, seg[n].a * min(r,R) + seg[n].b, get(L, R, seg[n].l, l, m), get(L, R, seg[n].r, m + 1, r) });
 	}
-	
-	void insert(ll L, ll R, ll a, ll b)  // [l,r] insert ax+b
-	{
+	// [l,r] insert ax+b
+	void insert(ll L, ll R, ll a, ll b) {
 		insert(L, R, a, b, 1, _l, _r);
 	}
 	
@@ -84,23 +85,20 @@ struct LiChao  // Minimum line management If you want maximum management, you ca
 	}
 };
 
-int main()
-{
+int main() {
 	LiChao tree(-1e12, 1e12); // range setting
 
 	int q; ci(q);
 
-	while (q--)
-	{
+	while (q--) {
 		int tp; ci(tp);		
 
-		if (tp & 1) // insert ax+b 
-		{
+		// insert ax+b
+		if (tp & 1) {
 			LL a, b; ci(a >> b);
 			tree.insert(-1e12, 1e12, -a, -b);
-		}
-		else // get maximum y at point x
-		{
+		} else {
+			// get maximum y at point x
 			LL x; ci(x);
 			co(-tree.get(x)<<"\n");
 		}
