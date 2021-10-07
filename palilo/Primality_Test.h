@@ -12,11 +12,9 @@ public:
         if (n < 2) return false;
         if (n == 2 || n == 3) return true;
         if (n % 6 != 1 && n % 6 != 5) return false;
-
         const auto& base = n < 4759123141ULL ? base_small : base_large;
         const int s = __builtin_ctzll(n - 1);
         const num d = n >> s;
-
         for (const auto& b : base) {
             if (b >= n) break;
             if (check_composite(n, b, d, s)) return false;
@@ -26,10 +24,8 @@ public:
     vector<num> factorize(num n) const {
         if (n == 1) return {};
         if (is_prime(n)) return {n};
-
         const num x = pollard(n);
         auto l = factorize(x), r = factorize(n / x);
-
         decltype(l) ret(l.size() + r.size());
         merge(l.begin(), l.end(), r.begin(), r.end(), ret.begin());
         return ret;
