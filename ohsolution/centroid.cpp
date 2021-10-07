@@ -3,10 +3,10 @@ vector<pair<int,int>> adj[max_v]; // nxt, dist pair
 int vist[max_v],sz[max_v];
 int cp[max_v]; // centroid tree parent
 
-int dfs(int u, int par = -1)
+int dfsz(int u, int par = -1) // caution : hld 를 같이 사용할 때 hld 에서 사용하는 sz배열과 겹치지 않게 
 {
 	sz[u] = 1;
-	for (auto& v : adj[u]) if (v.first != par && !vist[v.first]) sz[u] += dfs(v.first, u);
+	for (auto& v : adj[u]) if (v.first != par && !vist[v.first]) sz[u] += dfsz(v.first, u);
 	return sz[u];
 }
 
@@ -18,7 +18,7 @@ int fc(int u, int csz, int par = -1)
 
 void go(int u,int trp)
 {
-	int csz = dfs(u);
+	int csz = dfsz(u);
 	int cen = fc(u, csz/2); // find centroid
 
 	vist[cen] = 1;
