@@ -1,27 +1,30 @@
 /**
- * Author: Johan Sannemo
- * Date: 2016-12-15
- * License: CC0
- * Description: pi[x] computes the length of the longest prefix of s that ends at x, other than s[0...x] itself (abacaba -> 0010123).
- * Can be used to find all occurrences of a string.
+ * Author: palilo
+ * Date: 2021-10-08
+ * Description: KMP algorithm
  * Time: O(n)
- * Status: Tested on kattis:stringmatching
  */
 #pragma once
 
-vi pi(const string& s) {
-	vi p(sz(s));
-	rep(i,1,sz(s)) {
-		int g = p[i-1];
-		while (g && s[i] != s[g]) g = p[g-1];
-		p[i] = g + (s[i] == s[g]);
+vector<int> lps(const string& s) {
+	vector<int> vt(s.size());
+	for (int i = 1, j = 0; i < int(s.size()); ++i) {
+		while (j && s[i] != s[j]) j = vt[j - 1];
+		if (s[i] == s[j]) vt[i] = ++j;
 	}
-	return p;
+	return vt;
 }
 
-vi match(const string& s, const string& pat) {
-	vi p = pi(pat + '\0' + s), res;
-	rep(i,sz(p)-sz(s),sz(p))
-		if (p[i] == sz(pat)) res.push_back(i - 2 * sz(pat));
-	return res;
+vector<int> match(const string& s, const string& k) {
+	const auto fail = lps(k);
+	const int n = s.size(), m = k.size();
+	vector<int> ret;
+	for (int i = 0, j = 0; i < n; ++i) {
+		while (j && s[i] != k[j]) j = fail[j - 1];
+		if (s[i] == k[j] && ++j == m) {
+			ret.emplace_back(i - m + 1);
+			j = fail[m - 1];
+		}
+	}
+	return ret;
 }
