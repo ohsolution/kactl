@@ -1,4 +1,21 @@
 \appendix
-\chapter{Techniques}
+% \chapter{Techniques}
 
-\kactlimport[-l raw]{techniques.txt}
+% \kactlimport[-l raw]{techniques.txt}
+
+\chapter{appendix}
+
+\section{Mobius Example}
+  $ \displaystyle\sum_{i=1}^n \sum_{j=1}^m [gcd(i, j) = d] $
+
+  $ \displaystyle\sum_{a=1}^{\lfloor \frac n d \rfloor} \sum_{b=1}^{\lfloor \frac m d \rfloor} [gcd(a, b) = 1] \qquad (i = ad, j = bd) $
+
+  $ \displaystyle\sum_{a=1}^{\lfloor \frac n d \rfloor} \sum_{b=1}^{\lfloor \frac m d \rfloor} \sum_{d|gcd(a, b)} \mu (d) $
+
+  $ \displaystyle\sum_{a=1}^{\lfloor \frac n d \rfloor} \sum_{b=1}^{\lfloor \frac m d \rfloor} \sum_{k=1}^p [k|gcd(a, b)] \mu (k) \qquad (p = min(\lfloor \frac n d \rfloor, \lfloor \frac m d \rfloor)) $
+
+  $ \displaystyle\sum_{a=1}^{\lfloor \frac n d \rfloor} \sum_{b=1}^{\lfloor \frac m d \rfloor} \sum_{k=1}^p [k|a][k|b] \mu (k) $
+
+  $ \displaystyle\sum_{k=1}^p \mu (k) \sum_{a=1}^{\lfloor \frac n d \rfloor} [k|a] \sum_{b=1}^{\lfloor \frac m d \rfloor} [k|b] $
+
+  $ \displaystyle\sum_{k=1}^p \mu (k) \lfloor \frac n {kd} \rfloor \lfloor \frac m {kd} \rfloor $
