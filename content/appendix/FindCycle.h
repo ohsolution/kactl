@@ -1,5 +1,11 @@
-// Description: simple cycle detection algorithm. implemented as non-reculsive way.
-// return the vector of vertices on cycle. note that first and last vertex are repeated i.e. cycle.front() == cycle.back().
+/**
+ * Author: palilo
+ * Date: 2021-10-09
+ * Description: Description: simple cycle detection algorithm. implemented as non-reculsive way.
+ * return the vector of vertices on cycle. note that first and last vertex are repeated i.e. cycle.front() == cycle.back().
+ */
+#pragma once
+
 vector<int> find_cycle(vector<vector<int>>& adj) {
     vector<char> colour(adj.size());
     vector<int> cycle, eid;
