@@ -32,12 +32,14 @@ struct SuffixArray {
 			rep(i,1,lim) ws[i] += ws[i - 1];
 			for (int i = n; i--;) sa[--ws[x[y[i]]]] = y[i];
 			swap(x, y), p = 1, x[sa[0]] = 0;
-			rep(i,1,n) a = sa[i - 1], b = sa[i], x[b] =
-				(y[a] == y[b] && y[a + j] == y[b + j]) ? p - 1 : p++;
+			rep(i,1,n) {
+				a = sa[i - 1], b = sa[i];
+				x[b] = (y[a] == y[b] && a+j<n && b+j<n && y[a + j] == y[b + j]) ? p - 1 : p++;
+			}
 		}
 		rep(i,1,n) rank[sa[i]] = i;
 		for (int i = 0, j; i < n - 1; lcp[rank[i++]] = k)
 			for (k && k--, j = sa[rank[i] - 1];
-					s[i + k] == s[j + k]; k++);
+				i+k<n-1 && j+k<n-1 && s[i + k] == s[j + k]; k++);
 	}
 };
