@@ -21,7 +21,7 @@ struct SuffixArray {
 	vi sa, lcp;
 	
 	vi ori, lg2;
-    vector<vi> st;
+	vector<vi> st;
 	SuffixArray(string& s, int lim=256) { // or basic_string<int>
 		int n = sz(s) + 1, k = 0, a, b;
 		vi x(all(s)), y(n), ws(max(n, lim)), rank(n);
@@ -46,31 +46,31 @@ struct SuffixArray {
 				i+k<n-1 && j+k<n-1 && s[i + k] == s[j + k]; k++);
 				
 		// lcp RMQ build
-        lg2.resize(n + 1);
-        lg2[0] = lg2[1] = 0;
+		lg2.resize(n + 1);
+		lg2[0] = lg2[1] = 0;
 		rep(i,2,n+1) lg2[i] = lg2[i >> 1] + 1;
 
-        ori.resize(n);
-        int dep = lg2[n];
-        st.resize(n);
+		ori.resize(n);
+		int dep = lg2[n];
+		st.resize(n);
 		rep(i,0,n) {
-            ori[sa[i]] = i;
-            st[i].resize(dep + 1);
-            st[i][0] = lcp[i];
-        }
+			ori[sa[i]] = i;
+			st[i].resize(dep + 1);
+			st[i][0] = lcp[i];
+		}
 		rep(j,1,dep+1) {
-            for(int i = 0; i + (1 << (j - 1)) < n; ++i) {
-                st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
-            }
-        }
+			for(int i = 0; i + (1 << (j - 1)) < n; ++i) {
+				st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+			}
+		}
 	}
 	int get_lcp(int l, int r) {
-        if(l == r) return sa.size() - l - 1;
-        l = ori[l], r = ori[r];
-        if(l > r) swap(l, r);
-        int j = lg2[r - l];
-        return min(st[l + 1][j], st[r - (1 << j) + 1][j]);
-    }
+		if(l == r) return sa.size() - l - 1;
+		l = ori[l], r = ori[r];
+		if(l > r) swap(l, r);
+		int j = lg2[r - l];
+		return min(st[l + 1][j], st[r - (1 << j) + 1][j]);
+	}
 };
 // sa[0] = str.size(), sa.size() = str.size() + 1
 // lcp[i] = lcp(sa[i - 1], sa[i]), lcp[0] = 0
