@@ -24,7 +24,8 @@ struct PST {
 			t[stLeaf + i].v = d[i];
 		}
 
-		for(int i = 1; i < stLeaf; ++i) {
+		for(int i = stLeaf - 1; i > 0; --i) {
+			t[i].v = merge(t[i*2].v, t[i*2+1]);
 			t[i].l = i * 2;
 			t[i].r = i * 2 + 1;
 		}
@@ -34,7 +35,7 @@ struct PST {
 		if(l <= cl && cr <= r) return t[node].v;
 		else if(cr < l || r < cl) return 0;
 		int m = (cl + cr) / 2;
-		return findImpl(cl, m, l, r, t[node].l) + findImpl(m + 1, cr, l, r, t[node].r);
+		return merge(findImpl(cl, m, l, r, t[node].l), findImpl(m + 1, cr, l, r, t[node].r));
 	}
 	ll find(int l, int r, int version) {
 		return findImpl(0, stLeaf - 1, l, r, root[version]);
@@ -69,8 +70,20 @@ struct PST {
 		t[newnode].v = v;
 		newnode--;
 		while(newnode >= root.back()) {
-			t[newnode].v = t[t[newnode].l].v + t[t[newnode].r].v;
+			t[newnode].v = merge(t[t[newnode].l].v, t[t[newnode].r].v);
 			newnode--;
 		}
+	}
+	
+	void remove(int numrt)
+	{
+		int removeroot = root[root.size() - numrt];
+		t.erase(t.begin() + removeroot, t.end());
+		root.erase(root.end() - numrt, root.end());
+	}
+	
+	ll merge(ll l, ll r)
+	{
+		return l + r;
 	}
 };
