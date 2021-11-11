@@ -2,7 +2,7 @@
  * Author: palilo
  * Date: 2021-10-07
  * License: CC0
- * Description: Lazy Segment Tree - Gold Mine
+ * Description: Segment Tree - Gold Mine
  * Time: O(\log N).
  * Usage:
  * `e` : identity element
