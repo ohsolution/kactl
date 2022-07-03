@@ -99,6 +99,21 @@ $$\sqrt{1+x} = 1+\frac{x}{2}-\frac{x^2}{8}+\frac{2x^3}{32}-\frac{5x^4}{128}+\dot
 $$\sin x = x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+\dots,\,(-\infty<x<\infty)$$
 $$\cos x = 1-\frac{x^2}{2!}+\frac{x^4}{4!}-\frac{x^6}{6!}+\dots,\,(-\infty<x<\infty)$$
 
+\section{Fibonacci Series}
+$\sum_{i=1}^n F_i=F_{n+2}-1$
+\hspace{4em}
+$\sum_{i=1}^n F_{2i}=F_{2n+1}-1$\\
+
+$\sum_{i=1}^n F_{2i-1}=F_{2n}$
+\hspace{5em}
+$\sum_{i=1}^n F_i^2=F_nF_{n+1}$\\
+
+$gcd(F_n,F_m)=F_{gcd(n,m)}$
+\hspace{3em}
+$F_{2n-1}=F_n^2+F_{n-1}^2$\\
+
+$F_{2n}=(F_{n-1}+F_{n+1})F_n=(2F_{n-1}+F_n)F_n$\\
+
 \section{Probability theory}
 Let $X$ be a discrete random variable with probability $p_X(x)$ of assuming the value $x$. It will then have an expected value (mean) $\mu=\mathbb{E}(X)=\sum_xxp_X(x)$ and variance $\sigma^2=V(X)=\mathbb{E}(X^2)-(\mathbb{E}(X))^2=\sum_x(x-\mathbb{E}(X))^2p_X(x)$ where $\sigma$ is the standard deviation. If $X$ is instead continuous it will have a probability density function $f_X(x)$ and the sums above will instead be integrals with $p_X(x)$ replaced by $f_X(x)$.
 
