@@ -1,89 +1,59 @@
 /**
- * Author: Cube219
- * Description: Persistent SegTree
+ * Author: ansol4328
+ * Description: Persistent Segment Tree
  * Usage: 
+ * a = minimum number of node at leaf level
+ * b = total number of updating operation
+ * rn = maximum number of root
+ * To get the value of Kth segtree use qry(T.root[k],...)
  */
-struct PST {
-	struct Node {
-		int l = -1, r = -1;
-		ll v = 0;
-	};
-	vector<Node> t;
-	int stLeaf;
-	vector<int> root;
-	void init(int n, ll* d) {
-		t.clear();
-		root.clear();
-		root.push_back(1);
-
-		stLeaf = 1;
-		while(stLeaf < n) stLeaf *= 2;
-		t.resize(stLeaf * 2 + 1);
-
-		for(int i = 0; i < n; ++i) {
-			t[stLeaf + i].v = d[i];
-		}
-
-		for(int i = stLeaf - 1; i > 0; --i) {
-			t[i].v = merge(t[i*2].v, t[i*2+1]);
-			t[i].l = i * 2;
-			t[i].r = i * 2 + 1;
-		}
-	}
-
-	ll findImpl(int cl, int cr, int l, int r, int node) {
-		if(l <= cl && cr <= r) return t[node].v;
-		else if(cr < l || r < cl) return 0;
-		int m = (cl + cr) / 2;
-		return merge(findImpl(cl, m, l, r, t[node].l), findImpl(m + 1, cr, l, r, t[node].r));
-	}
-	ll find(int l, int r, int version) {
-		return findImpl(0, stLeaf - 1, l, r, root[version]);
-	}
-
-	void update(int idx, ll v) {
-		int cl = 0, cr = stLeaf - 1;
-		int node = root.back();
-
-		int newnode = t.size();
-		root.push_back(newnode);
-		t.push_back(t[node]);
-
-		while(cl != cr) {
-			int m = (cl + cr) / 2;
-			if(idx <= m) {
-				cr = m;
-				t[newnode].l = newnode + 1;
-				newnode++;
-
-				node = t[node].l;
-				t.push_back(t[node]);
-			} else {
-				cl = m + 1;
-				t[newnode].r = newnode + 1;
-				newnode++;
-
-				node = t[node].r;
-				t.push_back(t[node]);
-			}
-		}
-		t[newnode].v = v;
-		newnode--;
-		while(newnode >= root.back()) {
-			t[newnode].v = merge(t[t[newnode].l].v, t[t[newnode].r].v);
-			newnode--;
-		}
-	}
-	
-	void remove(int numrt)
-	{
-		int removeroot = root[root.size() - numrt];
-		t.erase(t.begin() + removeroot, t.end());
-		root.erase(root.end() - numrt, root.end());
-	}
-	
-	ll merge(ll l, ll r)
-	{
-		return l + r;
-	}
+struct PST{
+    struct Node{
+        int sum, L, R;
+    };
+    vector<Node> tree;
+    vector<int> root;
+    int h, cnt, base;
+    PST(int a, int b, int rn){
+        h=cnt=base=1;
+        while(base<a) base<<=1, h++;
+        int tmp=base*2+h*b+5;
+        tree.resize(tmp);
+        root.resize(rn+5);
+        root[0]=setup(1,base);
+    }
+    int setup(int ns, int nf){
+        int k=cnt++;
+        tree[k].sum=0;
+        if(ns<nf){
+            int mid=(ns+nf)>>1;
+            tree[k].L=setup(ns,mid);
+            tree[k].R=setup(mid+1,nf);
+        }
+        return k;
+    }
+    void update_Kth_tree(int k, int idx=-1, int v=-1){
+        if(root[k]==0) root[k]=root[k-1];
+        if(idx!=-1) root[k]=make(root[k],idx,v);
+    }
+    int make(int bef, int idx, int v, int ns=1, int nf=-1){
+        if(nf==-1) nf=base;
+        if(nf<idx || idx<ns) return bef;
+        int k=cnt++;
+        if(ns==nf) tree[k].sum=tree[bef].sum+v;
+        else{
+            int mid=(ns+nf)>>1;
+            tree[k].L=make(tree[bef].L,idx,v,ns,mid);
+            tree[k].R=make(tree[bef].R,idx,v,mid+1,nf);
+            tree[k].sum=tree[tree[k].L].sum+tree[tree[k].R].sum;
+        }
+        return k;
+    }
+    int qry(int num, int st, int fn, int ns=1, int nf=-1){
+        if(nf==-1) nf=base;
+        if(nf<st || fn<ns) return 0;
+        if(st<=ns && nf<=fn) return tree[num].sum;
+        int mid=(ns+nf)>>1;
+        return qry(tree[num].L,st,fn,ns,mid)+qry(tree[num].R,st,fn,mid+1,nf);
+    }
 };
