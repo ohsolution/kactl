@@ -23,6 +23,13 @@
 	\kactlimport{DFSMatching-PO.h}
 	\kactlimport{WeightedMatching.h}
 	% \kactlimport{GeneralMatching.h}
+	\subsection{Hall's Theorem}
+		Let $G$ be a finite bipartite graph with bipartite sets $X$ and $Y$ (i.e. $G := (X+Y, E)$). 
+		An $X$-perfect matching (also called: $X$-saturating matching) is a matching which covers every vertex in $X$. 
+		For a subset $W$ of $X$, let $N_{G}(W)$ denote the neighborhood of $W$ in $G$, i.e., the set of all vertices in $Y$ adjacent to some element of $W$. 
+		The marriage theorem in this formulation states that there is an $X$-perfect matching if and only if for every subset $W$ of $X$:
+		$$|W|\le{}|N_{G}(W)|$$
+		In other words: every subset $W$ of $X$ has sufficiently many adjacent vertices in $Y$.
 
 \section{DFS algorithms}
 	\kactlimport{SCC.h}
@@ -58,6 +65,7 @@
 		\texttt{mat[a][b]--, mat[b][b]++} (and \texttt{mat[b][a]--, mat[a][a]++} if $G$ is undirected).
 		Remove the $i$th row and column and take the determinant; this yields the number of directed spanning trees rooted at $i$
 		(if $G$ is undirected, remove any row/column).
+		$$$$
 
 	\subsection{Erdős–Gallai theorem}
 		Source: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Gallai_theorem
