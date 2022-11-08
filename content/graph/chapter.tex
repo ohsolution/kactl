@@ -16,13 +16,23 @@
 	\kactlimport{GlobalMinCut.h}
 	% \kactlimport{GomoryHu.h}
 
-\section{Matching}
-	\kactlimport{hopcroftKarp.h}
-	% \kactlimport{DFSMatching.h}
-	% \kactlimport{MinimumVertexCover.h}
-	\kactlimport{DFSMatching-PO.h}
-	\kactlimport{WeightedMatching.h}
-	% \kactlimport{GeneralMatching.h}
+	\section{Matching}
+	\subsection{L-R max flow}
+		1. Add new source and sink, $S'$ and $T'$ (note that, original source and sink are $S$ and $T$) \\
+		2. Change given edge's capacity to $R-L$ (where lower bound$=L$, upper bound$=R$, direction is $v_1$ to $v_2$) \\
+		3. Add new edge from $S'$ to $v_2$, and from $v_1$ to $T'$ and its capacity is $L$ \\
+		4. Add new edge from $T$ to $S$ with capacity infinity. \\
+		5. To check its validity, execute flow algoritm from $S'$ to $T'$. If flow is equal to sum of lower bound capacity, there exists solution under the constraint. \\
+		6. To find maximum flow, execute flow algorithm from original source to original sink. That is, from $S$ to $T$. \\
+		% lower bound = $L$, upper bound = $R$, change edge from $v_1$ to $v_2$ as capacity $= R-L$. Add new Source 
+		% \hspace{1em}L-R max flow는 Flow Graph 중 각 edge의 유량에 대한 하한선과 상한선이 존재하는 경우에 대한 최대 유량을 찾는 방법이다. 
+		% 모델링 방법은 기존의 Flow Graph에서 새로운 Source와 새로운 Sink를 추가하는 것이다. 새로운 Source와 Sink에 edge를 연결하는 방법은 다음과 같다. 
+		% 정점 v1에서 v2로 하한유량 L과 상한유량 R을 갖는 edge가 있다고 가정하자. 
+		% 새로운 Source에서 v2로 연결되는 capacity L짜리 edge를 연결하고, v1에서 새로운 Sink로 capacity가 L인 edge를 새롭게 연결하면 된다. 
+		% 이후 마지막으로 기존의 Sink에서 기존의 Source로 가는 capacity가 무한대인 edge를 추가한 뒤, 기존의 그래프의 edge 중 상한과 하한을 갖는 edge들의 capacity를 R-L로 수정한다. 
+		% 이렇게하면 L-R flow를 구하기 위한 새로운 그래프가 완성된다. 
+		% 이제 조건을 만족하는 정답이 존재하는지 판별하는 방법은 새로운 Source에서 새로운 Sink로 들어오는 유량이 $L_{tot}$인지 확인하면되고, 
+		% 만약 존재성이 밝혀진다면, 현재의 Flow Graph의 상태를 유지한채 기존의 Source에서 Sink로 가는 Maximum Flow를 구하여 존재성이 밝혀졌을 때의 $f_{Sink,Source}$에 더해주면 구하고자 하는 정답이 된다.
 	\subsection{Hall's Theorem}
 		Let $G$ be a finite bipartite graph with bipartite sets $X$ and $Y$ (i.e. $G := (X+Y, E)$). 
 		An $X$-perfect matching (also called: $X$-saturating matching) is a matching which covers every vertex in $X$. 
@@ -30,15 +40,13 @@
 		The marriage theorem in this formulation states that there is an $X$-perfect matching if and only if for every subset $W$ of $X$:
 		$$|W|\le{}|N_{G}(W)|$$
 		In other words: every subset $W$ of $X$ has sufficiently many adjacent vertices in $Y$.
-	\subsection{L-R max flow}
-		\hspace{1em}L-R max flow는 Flow Graph 중 각 edge의 유량에 대한 하한선과 상한선이 존재하는 경우에 대한 최대 유량을 찾는 방법이다. 
-		모델링 방법은 기존의 Flow Graph에서 새로운 Source와 새로운 Sink를 추가하는 것이다. 새로운 Source와 Sink에 edge를 연결하는 방법은 다음과 같다. 
-		정점 v1에서 v2로 하한유량 L과 상한유량 R을 갖는 edge가 있다고 가정하자. 
-		새로운 Source에서 v2로 연결되는 capacity L짜리 edge를 연결하고, v1에서 새로운 Sink로 capacity가 L인 edge를 새롭게 연결하면 된다. 
-		이후 마지막으로 기존의 Sink에서 기존의 Source로 가는 capacity가 무한대인 edge를 추가한 뒤, 기존의 그래프의 edge 중 상한과 하한을 갖는 edge들의 capacity를 R-L로 수정한다. 
-		이렇게하면 L-R flow를 구하기 위한 새로운 그래프가 완성된다. 
-		이제 조건을 만족하는 정답이 존재하는지 판별하는 방법은 새로운 Source에서 새로운 Sink로 들어오는 유량이 $L_{tot}$인지 확인하면되고, 
-		만약 존재성이 밝혀진다면, 현재의 Flow Graph의 상태를 유지한채 기존의 Source에서 Sink로 가는 Maximum Flow를 구하여 존재성이 밝혀졌을 때의 $f_{Sink,Source}$에 더해주면 구하고자 하는 정답이 된다.
+	\kactlimport{hopcroftKarp.h}
+	% \kactlimport{DFSMatching.h}
+	% \kactlimport{MinimumVertexCover.h}
+	\kactlimport{DFSMatching-PO.h}
+	\kactlimport{WeightedMatching.h}
+	% \kactlimport{GeneralMatching.h}
+
 
 \section{DFS algorithms}
 	\kactlimport{SCC.h}

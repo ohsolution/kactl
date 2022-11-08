@@ -1,3 +1,11 @@
+/**
+ * Author: deuslovelt
+ * Date: 2022-11-08
+ * License: CC0
+ * Source: 
+ * Description: abcd
+ */
+
 int cir[max_v];
 
 int main()

@@ -1,4 +1,10 @@
-
+/**
+ * Author: deuslovelt
+ * Date: 2022-11-08
+ * License: CC0
+ * Source: 
+ * Description: abcd
+ */
 // dp2[t][i] = sigma dp[t][subset i]
 
 fa(t, 1, 18)

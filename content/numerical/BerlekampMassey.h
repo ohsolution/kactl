@@ -1,3 +1,10 @@
+/**
+ * Author: deuslovelt
+ * Date: 2022-11-08
+ * License: CC0
+ * Source: 
+ * Description: abcd
+ */
 using lint = long long;
 
 lint ipow(lint x, lint p) {

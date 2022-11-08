@@ -1,4 +1,8 @@
-// original code from https://github.com/jh05013/PythonAlgorithms/blob/master/cpp05013/Seglazy.cpp
+/**
+ * Author: https://github.com/jh05013/PythonAlgorithms/blob/master/cpp05013/Seglazy.cpp
+ * Description: Lazy Segment Tree
+ * Usage: 
+ */
 
 //1-base
 struct SegTree{
