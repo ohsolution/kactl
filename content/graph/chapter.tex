@@ -22,7 +22,7 @@
 		2. Change given edge's capacity to $R-L$ (where lower bound$=L$, upper bound$=R$, direction is $v_1$ to $v_2$) \\
 		3. Add new edge from $S'$ to $v_2$, and from $v_1$ to $T'$ and its capacity is $L$ \\
 		4. Add new edge from $T$ to $S$ with capacity infinity. \\
-		5. To check its validity, execute flow algoritm from $S'$ to $T'$. If flow is equal to sum of lower bound capacity, there exists solution under the constraint. \\
+		5. To check its validity, execute flow algoritm from $S'$ to $T'$. If maximum flow from $S'$ to $T'$ is equal to sum of lower bound capacity, there exists solution under the constraint. \\
 		6. To find maximum flow, execute flow algorithm from original source to original sink. That is, from $S$ to $T$. \\
 		% lower bound = $L$, upper bound = $R$, change edge from $v_1$ to $v_2$ as capacity $= R-L$. Add new Source 
 		% \hspace{1em}L-R max flow는 Flow Graph 중 각 edge의 유량에 대한 하한선과 상한선이 존재하는 경우에 대한 최대 유량을 찾는 방법이다. 

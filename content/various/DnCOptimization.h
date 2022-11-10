@@ -1,7 +1,10 @@
 /**
  * Author: ohsolution
  * 
- * Description: Divide and Conquar Optimization DP
+ * Description: Divide and Conquar Optimization DP \\
+ * D[i][j] = min(D[i-1][k]+C[k][j]) (where k<j) \\
+ * For a<=b<=c<=d, C[a][c]+C[b][d]<=C[a][d]+C[b][c] (C is Monge array)
+ * or optimal k for each j has monotonicity
  */
 #pragma once
 
